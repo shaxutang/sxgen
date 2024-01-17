@@ -1,6 +1,6 @@
 import { defineConfig } from 'tsup'
 
-const isProd = process.env.NODE_ENV === 'production'
+const isDev = process.env.NODE_ENV === 'development'
 
 export default defineConfig({
   entry: ['src/index.ts'],
@@ -10,7 +10,7 @@ export default defineConfig({
   sourcemap: true,
   splitting: true,
   minify: true,
-  watch: !isProd,
+  watch: isDev,
   clean: ['dist/chunks'],
   esbuildOptions(options) {
     options.chunkNames = 'chunks/[name].[hash]'
