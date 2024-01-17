@@ -1,0 +1,21 @@
+---
+path: <%= projectName %>/tsup.config.ts
+---
+import { defineConfig } from "tsup";
+
+const isDev = process.env.NODE_ENV === "development";
+
+export default defineConfig({
+  entry: ["src/index.ts"],
+  format: ["cjs", "esm"],
+  dts: true,
+  treeshake: true,
+  sourcemap: true,
+  splitting: true,
+  minify: true,
+  watch: isDev,
+  clean: ["dist/chunks"],
+  esbuildOptions(options) {
+    options.chunkNames = "chunks/[name].[hash]";
+  },
+});

@@ -1,0 +1,15 @@
+---
+path: <%= projectName %>/src/index.ts
+---
+import { App } from "vue";
+// import component
+import Button from "./components/Button";
+
+export { Button };
+
+export default {
+  install(app: App) {
+    // app use component
+    app.use(Button);
+  },
+};

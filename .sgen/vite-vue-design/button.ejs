@@ -1,0 +1,50 @@
+---
+path: <%= projectName %>/src/components/Button/index.ts
+---
+import { Comp } from "@/type";
+import { withInstall } from "@/utils/install";
+import Button from "./Button.vue";
+import "./style.css";
+
+Button.install = withInstall(Button);
+
+export default Button as Comp<typeof Button>;
+
+export * from "./type";
+
+<!--truncate-->
+
+---
+path: <%= projectName %>/src/components/Button/Button.vue
+---
+<template>
+  <button class="<%= componentPrefix %>-button">Button</button>
+</template>
+
+<script setup lang="ts">
+import { ButtonProps } from "./type";
+
+defineOptions({
+  name: "<%= $s.changeCase.pascalCase(componentPrefix) %>Button",
+});
+
+defineProps<ButtonProps>();
+</script>
+
+<!--truncate-->
+
+---
+path: <%= projectName %>/src/components/Button/type.ts
+---
+export interface ButtonProps {
+  size?: "small" | "medium" | "large";
+}
+
+<!--truncate-->
+
+---
+path: <%= projectName %>/src/components/Button/style.css
+---
+.<%= componentPrefix %>-button {
+
+}

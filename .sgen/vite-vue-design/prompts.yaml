@@ -1,0 +1,12 @@
+projectName:
+  type: text
+  message: 'What is the name of your project?'
+username:
+  type: text
+  message: 'What is your username?'
+email:
+  type: text
+  message: 'What is your email address?'
+componentPrefix:
+  type: text
+  message: 'What is the prefix of your component name?'

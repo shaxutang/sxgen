@@ -1,0 +1,39 @@
+---
+path: <%= projectName %>/package.json
+---
+{
+  "name": "<%= projectName %>",
+  "version": "1.0.0",
+  "description": "please enter the module description.",
+  "type": "module",
+  "main": "dist/index.cjs",
+  "module": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "files": [
+    "dist"
+  ],
+  "homepage": "https://github.com/<%= username %>/<%= projectName %>#readme",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/<%= username %>/<%= projectName %>.git"
+  },
+  "bugs": {
+    "url": "https://github.com/<%= username %>/<%= projectName %>/issues"
+  },
+  "scripts": {
+    "dev": "vite build --watch",
+    "build": "tsc && vite build",
+    "preview": "vite preview",
+    "format": "prettier --write ."
+  },
+  "keywords": [],
+  "author": "<%= username %> <<%= email%>>",
+  "license": "MIT",
+  "devDependencies": {
+    "typescript": "^5.3.3",
+    "vite": "^5.0.11",
+    "vite-plugin-dts": "^3.7.1",
+    "prettier-plugin-organize-imports": "^3.2.4",
+    "@types/node": "^20.11.4"
+  }
+}

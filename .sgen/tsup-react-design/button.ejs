@@ -1,0 +1,43 @@
+---
+path: <%= projectName %>/src/components/Button/index.ts
+---
+import Button from "./Button";
+import "./style.css";
+
+export default Button;
+
+<!--truncate-->
+
+---
+path: <%= projectName %>/src/components/Button/Button.tsx
+---
+import clsx from "clsx";
+import { ButtonProps } from "./type";
+
+export default function Button({ children, className, ...rest }: ButtonProps) {
+  return (
+    <button className={clsx("<%= componentPrefix %>-button",className)} {...rest}>
+      {children}
+    </button>
+  );
+}
+
+<!--truncate-->
+
+---
+path: <%= projectName %>/src/components/Button/type.ts
+---
+export interface ButtonProps
+  extends React.DetailedHTMLProps<
+    React.ButtonHTMLAttributes<HTMLButtonElement>,
+    HTMLButtonElement
+  > {}
+
+<!--truncate-->
+
+---
+path: <%= projectName %>/src/components/Button/style.css
+---
+.<%= componentPrefix %>-button {
+
+}

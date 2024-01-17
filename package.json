@@ -1,0 +1,57 @@
+{
+  "name": "sgen",
+  "version": "1.0.0-alpha.1",
+  "description": "A simple cli tool to generate a project.",
+  "main": "dist/index.js",
+  "module": "dist/index.mjs",
+  "types": "dist/index.d.ts",
+  "bin": {
+    "sgen": "./index.mjs"
+  },
+  "files": [
+    "index.mjs",
+    "dist",
+    ".sgen"
+  ],
+  "homepage": "https://github.com/shaxutang/sgen#readme",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/shaxutang/sgen.git"
+  },
+  "bugs": {
+    "url": "https://github.com/shaxutang/sgen/issues"
+  },
+  "scripts": {
+    "dev": "cross-env NODE_ENV=development tsup",
+    "test": "vitest",
+    "build": "cross-env NODE_ENV=production tsup",
+    "format": "prettier --write ."
+  },
+  "keywords": [
+    "sgen"
+  ],
+  "author": "shaxutang <olaysunju@163.com>",
+  "license": "MIT",
+  "devDependencies": {
+    "@types/ejs": "^3.1.5",
+    "@types/js-yaml": "^4.0.9",
+    "@types/node": "^20.11.4",
+    "@types/prompts": "^2.4.9",
+    "cross-env": "^7.0.3",
+    "prettier-plugin-organize-imports": "^3.2.4",
+    "tsup": "^8.0.1",
+    "tsx": "^4.7.0",
+    "typescript": "^5.3.3",
+    "vitest": "^1.2.0"
+  },
+  "dependencies": {
+    "chalk": "^5.3.0",
+    "change-case": "^5.4.2",
+    "commander": "^11.1.0",
+    "dayjs": "^1.11.10",
+    "ejs": "^3.1.9",
+    "front-matter": "^4.0.2",
+    "js-yaml": "^4.1.0",
+    "prompts": "^2.4.2"
+  }
+}

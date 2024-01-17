@@ -1,0 +1,10 @@
+---
+path: <%= projectName %>/global.d.ts
+---
+export {};
+
+declare module "vue" {
+  export interface GlobalComponents {
+    <%= $s.changeCase.pascalCase(componentPrefix) %>Button: (typeof import("<%= projectName %>"))["Button"];
+  }
+}
