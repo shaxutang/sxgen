@@ -1,25 +1,25 @@
 {
-  "name": "sgen",
+  "name": "sxgen",
   "version": "1.0.0-alpha.1",
   "description": "A simple cli tool to generate a project.",
   "main": "dist/index.js",
   "module": "dist/index.mjs",
   "types": "dist/index.d.ts",
   "bin": {
-    "sgen": "./index.mjs"
+    "sxgen": "./index.mjs"
   },
   "files": [
     "index.mjs",
     "dist",
-    ".sgen"
+    ".sxgen"
   ],
-  "homepage": "https://github.com/shaxutang/sgen#readme",
+  "homepage": "https://github.com/shaxutang/sxgen#readme",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/shaxutang/sgen.git"
+    "url": "git+https://github.com/shaxutang/sxgen.git"
   },
   "bugs": {
-    "url": "https://github.com/shaxutang/sgen/issues"
+    "url": "https://github.com/shaxutang/sxgen/issues"
   },
   "scripts": {
     "dev": "cross-env NODE_ENV=development tsup",
@@ -28,7 +28,7 @@
     "format": "prettier --write ."
   },
   "keywords": [
-    "sgen"
+    "sxgen"
   ],
   "author": "shaxutang <olaysunju@163.com>",
   "license": "MIT",
