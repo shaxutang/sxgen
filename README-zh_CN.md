@@ -1,5 +1,7 @@
 # SXGEN
 
+[English](https://github.com/shaxutang/sxgen?tab=readme-ov-file#sxgen) | [简体中文](https://github.com/shaxutang/sxgen/blob/main/README-zh_CN.md)
+
 一个用来生成代码的小工具。
 
 ## 安装
