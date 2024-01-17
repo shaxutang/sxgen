@@ -15,7 +15,7 @@ export type AppendFrontMappter = {
 
 export type FrontMatter = AddFrontMatter | AppendFrontMappter
 
-export type ParseTemplateResult = {
+export type TemplateValue = {
   frontMatter: FrontMatter
   body: string
 }
@@ -46,9 +46,9 @@ export function renderEjsTemplate<T extends Record<string, any>>(
 /**
  * Parses a template.
  * @param {string} [content] - The content of the template.
- * @returns {ParseTemplateResult} An object containing the parsed front matter and body.
+ * @returns {TemplateValue} An object containing the parsed front matter and body.
  */
-export function parseTemplate(content: string): ParseTemplateResult {
+export function parseTemplate(content: string): TemplateValue {
   const { attributes: frontMatter, body } = fm<FrontMatter>(content)
   return {
     frontMatter,
