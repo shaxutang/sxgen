@@ -56,7 +56,7 @@ export async function getFileContents(path: string) {
       [file]: readFileSync(join(path, file), 'utf-8')
     }))
     .reduce((pre, cur) => ({ ...pre, ...cur }), {}) as Record<
-    `${string}.ejs` | 'prompts.yaml' | 'prompts.yml',
+    string | 'prompts.yaml' | 'prompts.yml',
     string
   >
 }
