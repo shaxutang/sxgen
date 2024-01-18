@@ -33,7 +33,16 @@ export async function loadWorkspace(): Promise<
     : []
 
   return [...presetDirs, ...workspaceDirs]
-    .filter((dir) => statSync(join(WORKSPACE_PATH, dir)).isDirectory())
+    .filter((dir, index) =>
+      statSync(
+        join(
+          index <= presetDirs.length - 1
+            ? PRESET_WORKSPACE_PATH
+            : WORKSPACE_PATH,
+          dir
+        )
+      ).isDirectory()
+    )
     .map((dir, index) => {
       return {
         title:
