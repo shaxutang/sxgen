@@ -4,7 +4,7 @@ import { mkdir, readFile, readdir, writeFile } from 'fs/promises'
 import yml from 'js-yaml'
 import { join } from 'path'
 import prompts from 'prompts'
-import { TRUNCATED, WORKSPACE_PATH } from './constants'
+import { PRESET_WORKSPACE_PATH, TRUNCATED, WORKSPACE_PATH } from './constants'
 import { parseTemplate, renderEjsTemplate } from './parse'
 import { isExists } from './util'
 
@@ -27,11 +27,19 @@ export async function loadWorkspace(): Promise<
     value: string
   }[]
 > {
-  return (await readdir(WORKSPACE_PATH, 'utf-8'))
+  const presetDirs = await readdir(PRESET_WORKSPACE_PATH, 'utf-8')
+  const workspaceDirs = WORKSPACE_PATH
+    ? await readdir(WORKSPACE_PATH, 'utf-8')
+    : []
+
+  return [...presetDirs, ...workspaceDirs]
     .filter((dir) => statSync(join(WORKSPACE_PATH, dir)).isDirectory())
-    .map((dir) => {
+    .map((dir, index) => {
       return {
-        title: dir,
+        title:
+          index <= presetDirs.length - 1
+            ? `✨ preset ✨ > ${dir}`
+            : `✨ custom ✨ > ${dir}`,
         value: join(WORKSPACE_PATH, dir)
       }
     })
