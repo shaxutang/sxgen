@@ -49,7 +49,12 @@ export async function loadWorkspace(): Promise<
           index <= presetDirs.length - 1
             ? `✨ preset ✨ > ${dir}`
             : `✨ custom ✨ > ${dir}`,
-        value: join(WORKSPACE_PATH, dir)
+        value: join(
+          index <= presetDirs.length - 1
+            ? PRESET_WORKSPACE_PATH
+            : WORKSPACE_PATH,
+          dir
+        )
       }
     })
 }
