@@ -2,7 +2,7 @@ import chalk from 'chalk'
 import { readFileSync, statSync } from 'fs'
 import { mkdir, readFile, readdir, writeFile } from 'fs/promises'
 import yml from 'js-yaml'
-import { join } from 'path'
+import { basename, join } from 'path'
 import prompts from 'prompts'
 import { PRESET_WORKSPACE_PATH, TRUNCATED, WORKSPACE_PATH } from './constants'
 import { parseTemplate, renderEjsTemplate } from './parse'
@@ -27,34 +27,24 @@ export async function loadWorkspace(): Promise<
     value: string
   }[]
 > {
-  const presetDirs = await readdir(PRESET_WORKSPACE_PATH, 'utf-8')
+  const presetDirs = (await readdir(PRESET_WORKSPACE_PATH, 'utf-8')).map(
+    (dir) => join(PRESET_WORKSPACE_PATH, dir)
+  )
   const workspaceDirs = WORKSPACE_PATH
-    ? await readdir(WORKSPACE_PATH, 'utf-8')
+    ? (await readdir(WORKSPACE_PATH, 'utf-8')).map((dir) =>
+        join(PRESET_WORKSPACE_PATH, dir)
+      )
     : []
 
   return [...presetDirs, ...workspaceDirs]
-    .filter((dir, index) =>
-      statSync(
-        join(
-          index <= presetDirs.length - 1
-            ? PRESET_WORKSPACE_PATH
-            : WORKSPACE_PATH,
-          dir
-        )
-      ).isDirectory()
-    )
+    .filter((path) => statSync(path).isDirectory())
     .map((dir, index) => {
+      const isPreset = index <= presetDirs.length - 1
       return {
-        title:
-          index <= presetDirs.length - 1
-            ? `✨ preset ✨ > ${dir}`
-            : `✨ custom ✨ > ${dir}`,
-        value: join(
-          index <= presetDirs.length - 1
-            ? PRESET_WORKSPACE_PATH
-            : WORKSPACE_PATH,
-          dir
-        )
+        title: isPreset
+          ? `✨ preset ✨ > ${basename(dir)}`
+          : `✨ custom ✨ > ${basename(dir)}`,
+        value: join(isPreset ? PRESET_WORKSPACE_PATH : WORKSPACE_PATH, dir)
       }
     })
 }
