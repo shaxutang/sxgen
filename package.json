@@ -1,6 +1,6 @@
 {
   "name": "sxgen",
-  "version": "1.0.0-alpha.2",
+  "version": "1.0.0-alpha.3",
   "description": "A simple cli tool to generate code.",
   "main": "dist/index.js",
   "module": "dist/index.mjs",
