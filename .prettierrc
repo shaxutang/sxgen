@@ -2,6 +2,5 @@
   "semi": false,
   "singleQuote": true,
   "trailingComma": "none",
-  "bracketSameLine": true,
   "plugins": ["prettier-plugin-organize-imports"]
 }
