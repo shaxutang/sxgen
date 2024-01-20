@@ -6,23 +6,19 @@ import * as changeCase from "change-case";
 import fg from "fast-glob";
 import { writeFileSync } from "fs";
 import { join, resolve } from "path";
+import { PreRenderedChunk } from "rollup";
 import { Plugin, defineConfig } from "vite";
 import dts from "vite-plugin-dts";
 
 const prefix = "<%= componentPrefix %>";
-// Regular expression for matching component paths
 const regex = /src\/components\/([^/]+)\/index\.ts/;
-// Get all component paths
-const componentPaths = fg.sync("src/components/*/index.ts");
-// Extract component names
-const componentEntryNames = componentPaths.map((path) => path.match(regex)![1]);
-// Map component paths to an object
-const componentEntries = componentPaths.reduce((entries, path) => {
-  const name = path.match(regex)![1];
-  return { ...entries, [name]: path };
-}, {});
+const componentEntries = Object.fromEntries(
+  fg
+    .sync("src/components/*/index.ts")
+    .map((path) => [path.match(regex)![1], path]),
+);
+const componentEntryNames = Object.keys(componentEntries);
 
-// Check if it's a component entry
 function isComponentEntry(name: string) {
   return componentEntryNames.includes(name);
 }
@@ -49,6 +45,19 @@ function postBuild(): Plugin {
   };
 }
 
+const entryFileNames = ({ name, ...rest }: PreRenderedChunk) => {
+  return name === "index" ? `[format]/index.js` : `[format]/[name]/index.js`;
+};
+
+const assetFileNames = ({ name }) => {
+  if (name?.endsWith(".css")) {
+    const cssName = name?.replace(".css", "");
+    if (cssName === "index") return "styles/index.css";
+    if (isComponentEntry(cssName)) return `styles/${cssName}/index.css`;
+  }
+  return name!;
+};
+
 /**
  * Vite configuration file
  */
@@ -62,65 +71,35 @@ export default defineConfig({
     vue(),
     dts({
       include: ["src/*.ts", "src/components/**/*.{ts,vue}"],
+      outDir: "dist/types",
+      rollupTypes: true,
     }),
-    postBuild()
+    postBuild(),
   ],
   build: {
     lib: {
       entry: {
-        // Main entry
         index: "src/index.ts",
-        // Component entries
         ...componentEntries,
-        // Style merge entry
-        extra: "src/index.css",
       },
-      // Library name
       name: "<%= $s.changeCase.camelCase(projectName) %>",
-      // File naming rule
-      fileName: (format, name) => {
-        const formatExtension = format === "es" ? "js" : "cjs";
-
-        if (isComponentEntry(name)) {
-          // Component file naming rule
-          return `components/${name}/index.${formatExtension}`;
-        }
-        // Non-component file naming rule
-        return `${name}.${formatExtension}`;
-      },
-      // Supported formats
       formats: ["cjs", "es"],
     },
-    // Enable CSS code splitting
     cssCodeSplit: true,
-    // Rollup configuration
     rollupOptions: {
       external: ["vue"],
       output: {
-        // CSS file naming rule
-        assetFileNames: ({ name }) => {
-          if (name?.endsWith(".css")) {
-            const cssName = name?.replace(".css", "");
-            if (cssName === "extra") {
-              // Merge all css
-              return "index.css";
-            }
-            if (isComponentEntry(cssName))
-              // Component style file naming rule
-              return `components/${cssName}/index.css`;
-          }
-          return name!;
-        },
-        // Import css in packaged file
+        exports: "named",
+        entryFileNames,
+        assetFileNames,
+        chunkFileNames: "chunks/[name].[format].js",
         intro: ({ facadeModuleId }) => {
-          const isComponentEntry = facadeModuleId?.match(regex)?.[1];
-          if (isComponentEntry) {
-            return `import "./index.css";`;
+          const componentName = facadeModuleId?.match(regex)?.[1];
+          if (componentName) {
+            return `import "../../styles/${componentName}/index.css";`;
           }
           return "";
         },
-        // JS file naming rule
-        chunkFileNames: "chunks/[name].[format].js",
       },
     },
   },

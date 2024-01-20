@@ -6,9 +6,18 @@ path: <%= projectName %>/package.json
   "version": "1.0.0",
   "description": "please enter the module description.",
   "type": "module",
-  "main": "dist/index.cjs",
-  "module": "dist/index.js",
-  "types": "dist/index.d.ts",
+  "exports": {
+    ".": {
+      "import": "./dist/es/index.js",
+      "require": "./dist/cjs/index.js",
+      "types": "./dist/types/index.d.ts"
+    },
+    "./Button": {
+      "import": "./dist/es/Button/index.js",
+      "require": "./dist/cjs/Button/index.js",
+      "types": "./dist/types/Button.d.ts"
+    }
+  },
   "files": [
     "dist"
   ],
@@ -34,6 +43,7 @@ path: <%= projectName %>/package.json
     "vite": "^5.0.11",
     "vite-plugin-dts": "^3.7.1",
     "prettier-plugin-organize-imports": "^3.2.4",
+    "rollup": "^4.9.5",
     "@types/node": "^20.11.4",
     "@vitejs/plugin-vue": "^5.0.3",
     "fast-glob": "^3.3.2",
