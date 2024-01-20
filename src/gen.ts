@@ -32,7 +32,7 @@ export async function loadWorkspace(): Promise<
   )
   const workspaceDirs = WORKSPACE_PATH
     ? (await readdir(WORKSPACE_PATH, 'utf-8')).map((dir) =>
-        join(PRESET_WORKSPACE_PATH, dir)
+        join(WORKSPACE_PATH, dir)
       )
     : []
 
@@ -44,7 +44,7 @@ export async function loadWorkspace(): Promise<
         title: isPreset
           ? `✨ preset ✨ > ${basename(dir)}`
           : `✨ custom ✨ > ${basename(dir)}`,
-        value: join(isPreset ? PRESET_WORKSPACE_PATH : WORKSPACE_PATH, dir)
+        value: dir
       }
     })
 }
