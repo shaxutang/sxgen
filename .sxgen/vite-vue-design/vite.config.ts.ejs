@@ -2,11 +2,11 @@
 path: <%= projectName %>/vite.config.ts
 ---
 import vue from "@vitejs/plugin-vue";
-import fg from "fast-glob";
 import * as changeCase from "change-case";
+import fg from "fast-glob";
 import { writeFileSync } from "fs";
 import { join, resolve } from "path";
-import { defineConfig } from "vite";
+import { Plugin, defineConfig } from "vite";
 import dts from "vite-plugin-dts";
 
 const prefix = "<%= componentPrefix %>";
@@ -27,7 +27,7 @@ function isComponentEntry(name: string) {
   return componentEntryNames.includes(name);
 }
 
-function postBuild() {
+function postBuild(): Plugin {
   return {
     name: "vite-plugin-post-build",
     closeBundle() {
@@ -46,7 +46,7 @@ function postBuild() {
       ].join("\n");
       writeFileSync(join(process.cwd(), "global.d.ts"), exportStr);
     },
-  } as Plugin;
+  };
 }
 
 /**
