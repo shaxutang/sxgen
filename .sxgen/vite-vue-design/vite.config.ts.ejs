@@ -26,7 +26,7 @@ function isComponentEntry(name: string) {
 function postBuild(): Plugin {
   return {
     name: "vite-plugin-post-build",
-    closeBundle() {
+    buildEnd() {
       const exportStr = [
         "export {};",
         'declare module "vue" {',
