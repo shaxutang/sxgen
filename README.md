@@ -1,5 +1,7 @@
 # SXGEN
 
+![](https://img.shields.io/npm/v/sxgen?style=flat&colorA=002438&colorB=28CF8D)
+
 [English](https://github.com/shaxutang/sxgen?tab=readme-ov-file#sxgen) | [简体中文](https://github.com/shaxutang/sxgen/blob/main/README-zh_CN.md)
 
 A simple cli tool to generate code.
