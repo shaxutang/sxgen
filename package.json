@@ -30,7 +30,7 @@
   "keywords": [
     "sxgen"
   ],
-  "author": "shaxutang <olaysunju@163.com>",
+  "author": "shaxutang <shaxutang@163.com>",
   "license": "MIT",
   "devDependencies": {
     "@types/ejs": "^3.1.5",
